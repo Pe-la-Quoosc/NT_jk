@@ -1,0 +1,10 @@
+- Pipeline: workflow tự động gồm nhiều bước
+
+- Job: 1 việc cụ thêt trong jenkins ( từng nhiệm vụ nhỏ)
+
+- Build: kết quả khi chạy 1 job
+=======
+- Node: máy chạy jenkons job
+- Master node: máy chính ( quản lí jk, điều phối pipeline)
+- Agent Node(Slave): máy phụ để chạy jk job
+- Executor: số lượng job chạy đồng thời trên node
