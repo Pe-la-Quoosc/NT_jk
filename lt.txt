@@ -8,3 +8,6 @@
 - Master node: máy chính ( quản lí jk, điều phối pipeline)
 - Agent Node(Slave): máy phụ để chạy jk job
 - Executor: số lượng job chạy đồng thời trên node
+
+-----abc123
+
