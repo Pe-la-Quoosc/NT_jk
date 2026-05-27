@@ -1,25 +1,53 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "nt_jk_app"
+        CONTAINER_NAME = "nt_jk_container"
+    }
+
     stages {
-        stage('Clone') {
+
+        stage('Checkout') {
             steps {
-                echo 'Clone source code...'
+                echo 'Getting source code...'
             }
         }
 
-        stage('Install') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Install dependencies...'
-                bat 'npm install'
+                bat "docker build -t %IMAGE_NAME% ."
             }
         }
 
-        stage('Run') {
+        stage('Stop Old Container') {
             steps {
-                echo 'Run application...'
-                bat 'node app.js'
+                bat """
+                docker stop %CONTAINER_NAME% || exit 0
+                docker rm %CONTAINER_NAME% || exit 0
+                """
             }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                bat """
+                docker run -d ^
+                --name %CONTAINER_NAME% ^
+                -p 3000:3000 ^
+                %IMAGE_NAME%
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Docker container deployed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
