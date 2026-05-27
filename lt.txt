@@ -9,5 +9,5 @@
 - Agent Node(Slave): máy phụ để chạy jk job
 - Executor: số lượng job chạy đồng thời trên node
 
------abc123
+-----abc123fsfdfa
 
