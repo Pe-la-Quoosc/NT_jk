@@ -8,34 +8,28 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                echo 'Getting source code...'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                bat "docker build -t %IMAGE_NAME% ."
+                sh "docker build -t ${IMAGE_NAME} ."
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                bat """
-                docker stop %CONTAINER_NAME% || exit 0
-                docker rm %CONTAINER_NAME% || exit 0
+                sh """
+                docker stop ${CONTAINER_NAME} || true
+                docker rm ${CONTAINER_NAME} || true
                 """
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                bat """
-                docker run -d ^
-                --name %CONTAINER_NAME% ^
-                -p 3000:3000 ^
-                %IMAGE_NAME%
+                sh """
+                docker run -d \
+                --name ${CONTAINER_NAME} \
+                -p 3000:3000 \
+                ${IMAGE_NAME}
                 """
             }
         }
@@ -43,7 +37,7 @@ pipeline {
 
     post {
         success {
-            echo 'Docker container deployed successfully!'
+            echo 'Docker deployed successfully!'
         }
 
         failure {
