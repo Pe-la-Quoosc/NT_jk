@@ -2,25 +2,10 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Clone') {
+        stage('Build') {
             steps {
-                echo 'Cloning source code...'
+                echo 'Hello Jenkins!'
             }
         }
-
-        // stage('Build Docker Image') {
-        //     steps {
-        //         sh 'docker build -t devops-demo .'
-        //     }
-        // }
-
-        // stage('Run Container') {
-        //     steps {
-        //         sh 'docker rm -f devops-container || true'
-        //         sh 'docker run -d --name devops-container -p 3000:3000 devops-demo'
-        //     }
-        // }
-
     }
 }
